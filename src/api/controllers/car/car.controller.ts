@@ -1,8 +1,8 @@
 import { Response } from "express";
-import { Delete, Get, InternalServerError, JsonController, NotFoundError, Param, QueryParams, Res } from "routing-controllers";
+import { BadRequestError, Body, Delete, Get, InternalServerError, JsonController, NotFoundError, Param, Post, QueryParams, Res } from "routing-controllers";
 import { Service } from "typedi";
 import { CarService } from "../../services/car.service";
-import { GetCarsInput, DeleteCarOutput, GetCarsOutput, GetCarOutput } from "../../dtos/car";
+import { GetCarsInput, DeleteCarOutput, GetCarsOutput, GetCarOutput,CreateCarsInput, CreateCarOutput } from "../../dtos/car";
 import { errorResponse, reportError } from "../../../utils/error";
 
 const API_PATH = "/api/v1";
@@ -30,6 +30,20 @@ export class CarController {
       if (!car) {
         return errorResponse(response, new NotFoundError(`car not found [id: ${id}]`));
       }
+      return { ok: true, data: car };
+    } catch (error: unknown) {
+      reportError(error);
+      return errorResponse(response, new InternalServerError("internal server error"));
+    }
+  }
+  @Post()
+  async createCar(@Res() response: Response, @Body() createCarsInput: CreateCarsInput): Promise<CreateCarOutput> {
+    try {
+      let car = await this.carService.getCarByVIN(createCarsInput.vehicleIdentificationNumber);
+      if (car) {
+        return errorResponse(response, new BadRequestError("there is a car with that VIN"));
+      }
+      car = await this.carService.createCar(createCarsInput);
       return { ok: true, data: car };
     } catch (error: unknown) {
       reportError(error);

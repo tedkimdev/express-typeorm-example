@@ -20,5 +20,6 @@ export const getError = (error: unknown) => {
 export const reportError = (error: unknown) => {
   if (error instanceof Error) {
     // send the error to a logging service
+    console.log(`[error] ${error}`);
   }
 };

@@ -14,10 +14,20 @@ export class CarRepository extends Repository<CarEntity> {
       where,
     });
   }
+
   getCarById(id: string): Promise<CarEntity> {
     return this.findOne(id);
   }
+
+  getCarByVIN(vin: string): Promise<CarEntity> {
+    return this.findOne({ where: { vehicleIdentificationNumber: vin } });
+  }
+
   removeCarById(id: string) {
     return this.delete({ id });
+  }
+
+  createCar(car: CarEntity) {
+    return this.save(car);
   }
 }
