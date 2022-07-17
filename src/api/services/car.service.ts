@@ -23,4 +23,13 @@ export class CarService {
       throw getError(error);
     }
   }
+
+  async removeCar(id: string): Promise<boolean> {
+    try {
+      const result = await this.carRepository.removeCarById(id);
+      return result.affected > 0;
+    } catch(error: unknown) {
+      throw getError(error);
+    }
+  }
 }

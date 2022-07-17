@@ -17,4 +17,7 @@ export class CarRepository extends Repository<CarEntity> {
   getCarById(id: string): Promise<CarEntity> {
     return this.findOne(id);
   }
+  removeCarById(id: string) {
+    return this.delete({ id });
+  }
 }
