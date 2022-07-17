@@ -1,17 +1,11 @@
 import {
   Column,
-  CreateDateColumn,
-  DeleteDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from "typeorm";
+import { CommonEntity } from "./base.entities";
 
 @Entity("Cars")
-export class CarEntity {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
-
+export class CarEntity extends CommonEntity {
   @Column({ length: 7 })
   plate: string;
 
@@ -41,13 +35,4 @@ export class CarEntity {
 
   @Column()
   color: string;
-
-  @CreateDateColumn()
-  createdDate: Date;
-
-  @UpdateDateColumn()
-  updatedDate: Date;
-
-  @DeleteDateColumn()
-  deletedDate: Date;
 }
