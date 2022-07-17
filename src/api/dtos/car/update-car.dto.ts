@@ -2,45 +2,54 @@ import { IsNumber, IsOptional, IsString, IsUppercase, Length } from "class-valid
 import { CarEntity } from "../../entities/car.entities";
 import { BaseOutput } from "../common/output.dto";
 
-export class CreateCarsInput {
+export class UpdateCarsInput {
   @IsString()
   @Length(7, 7)
-  plate: string;
+  @IsOptional()
+  plate?: string;
 
   @IsString()
   @Length(7, 7)
-  registration: string;
+  @IsOptional()
+  registration?: string;
 
   @IsString()
   @Length(2, 2)
   @IsUppercase()
-  registrationState: string;
+  @IsOptional()
+  registrationState?: string;
 
   @IsString()
-  color: string;
+  @IsOptional()
+  color?: string;
 
   @IsString()
   @Length(10) // MM/DD/YYYY
-  registrationExpirationDate: string;
+  @IsOptional()
+  registrationExpirationDate?: string;
 
   @IsString()
-  name: string;
+  @IsOptional()
+  name?: string;
 
   @IsString()
   @Length(17, 17)
-  vehicleIdentificationNumber: string;
+  @IsOptional()
+  vehicleIdentificationNumber?: string;
 
   @IsString()
   @IsOptional()
   description?: string;
 
   @IsNumber()
-  mileage: number;
+  @IsOptional()
+  mileage?: number;
 
   @IsNumber()
-  value: number;
+  @IsOptional()
+  value?: number;
 }
 
-export class CreateCarOutput extends BaseOutput {
+export class UpdateCarOutput extends BaseOutput {
   data?: CarEntity;
 }

@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import { getError } from "../../utils/error";
-import { CreateCarsInput, GetCarsInput } from "../dtos/car";
+import { CreateCarsInput, GetCarsInput, UpdateCarsInput } from "../dtos/car";
 import { CarEntity } from "../entities";
 import { CarRepository } from "../repositories/car.repository";
 
@@ -56,6 +56,26 @@ export class CarService {
       car.value = createCarInput.value;
       car.mileage = createCarInput.mileage;
       return await this.carRepository.createCar(car);
+    } catch(error: unknown) {
+      throw getError(error);
+    }
+  }
+
+  async updateCar(car: CarEntity, updateCarInput: UpdateCarsInput) {
+    try {
+      const newCar = car;
+      newCar.name = updateCarInput.name? updateCarInput.name : car.name;
+      newCar.description = updateCarInput.description ? updateCarInput.description : car.description;
+      newCar.plate = updateCarInput.plate ? updateCarInput.plate : car.plate;
+      newCar.registration = updateCarInput.registration? updateCarInput.registration : car.registration;
+      newCar.vehicleIdentificationNumber = car.vehicleIdentificationNumber;
+      newCar.registrationExpirationDate = updateCarInput.registrationExpirationDate ? new Date(updateCarInput.registrationExpirationDate) : car.registrationExpirationDate;
+      newCar.registrationState = updateCarInput.registrationState ? updateCarInput.registrationState : car.registrationState;
+      newCar.color = updateCarInput.color ? updateCarInput.color : car.color;
+      newCar.value = updateCarInput.value ? updateCarInput.value : car.value;
+      newCar.mileage = updateCarInput.mileage ? updateCarInput.mileage : car.mileage;
+
+      return await this.carRepository.updateCar(newCar);
     } catch(error: unknown) {
       throw getError(error);
     }

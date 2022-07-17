@@ -30,4 +30,8 @@ export class CarRepository extends Repository<CarEntity> {
   createCar(car: CarEntity) {
     return this.save(car);
   }
+
+  updateCar(car: CarEntity) {
+    return this.save(car);
+  }
 }
