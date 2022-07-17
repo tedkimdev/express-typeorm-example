@@ -1,6 +1,6 @@
 import { Body, Get, JsonController, Post } from "routing-controllers";
 
-import { ExampleEntity } from "../../models";
+import { ExampleEntity } from "../../entities";
 
 @JsonController("/example-entity")
 export class UserController {
