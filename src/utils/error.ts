@@ -1,9 +1,10 @@
 import { Response } from "express";
 import { HttpError } from "routing-controllers";
+import { BaseOutput } from "../api/dtos/common/output.dto";
 
-export const errorResponse = (response: Response, error: HttpError) => {
+export const errorResponse = (response: Response, error: HttpError): BaseOutput => {
   response.status(error.httpCode);
-  return error;
+  return { ok: false, error };
 };
 
 export const getError = (error: unknown) => {
