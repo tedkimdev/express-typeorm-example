@@ -10,6 +10,8 @@
     "dev": "nodemon -r dotenv/config src/index.ts",
     "build": "tsc",
     "lint": "eslint src/**/*.ts",
+    "format": "./node_modules/.bin/prettier --write \"**/*.ts\"",
+    "format:check": "./node_modules/.bin/prettier --check \"**/*.ts\"",
     "migration:create": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:create",
     "migration:show": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:show",
     "migration:generate": "./node_modules/.bin/ts-node ./node_modules/.bin/typeorm migration:generate",
