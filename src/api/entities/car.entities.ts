@@ -2,7 +2,7 @@ import {
   Column,
   Entity,
 } from "typeorm";
-import { CommonEntity } from "./base.entities";
+import { CommonEntity } from "./common.entities";
 
 @Entity("Cars")
 export class CarEntity extends CommonEntity {
