@@ -24,7 +24,7 @@ export class CarRepository extends Repository<CarEntity> {
   }
 
   removeCarById(id: string) {
-    return this.delete({ id });
+    return this.delete(id);
   }
 
   createCar(car: CarEntity) {
