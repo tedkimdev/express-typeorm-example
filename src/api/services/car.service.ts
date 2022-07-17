@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
-import { GetCarsInput } from "../controllers/car/get-cars.dto";
-// import { CarEntity } from "../entities";
+import { getError } from "../../utils/error";
+import { GetCarsInput } from "../dtos/car/get-cars.dto";
 import { CarRepository } from "../repositories/car.repository";
 
 @Service()
@@ -12,8 +12,7 @@ export class CarService {
     try {
       return await this.carRepository.getCars(getCarsInput);
     } catch(error: unknown) {
-      if (error instanceof Error) throw error;
-      throw new Error(`unknown error: ${String(JSON.stringify(error))}`);
+      throw getError(error);
     }
   }
 
@@ -21,8 +20,7 @@ export class CarService {
     try {
       return this.carRepository.getCarById(id);
     } catch(error: unknown) {
-      if (error instanceof Error) throw error;
-      throw new Error(`unknown error: ${String(JSON.stringify(error))}`);
+      throw getError(error);
     }
   }
 }

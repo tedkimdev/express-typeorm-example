@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { Repository, EntityRepository } from "typeorm";
-import { GetCarsInput } from "../controllers/car/get-cars.dto";
+import { GetCarsInput } from "../dtos/car/get-cars.dto";
 import { CarEntity } from "../entities/car.entities";
 
 @Service()
@@ -8,10 +8,10 @@ import { CarEntity } from "../entities/car.entities";
 export class CarRepository extends Repository<CarEntity> {
   getCars(getCarsInput: GetCarsInput): Promise<CarEntity[]> {
     const where = {
-      ...getCarsInput
+      ...getCarsInput,
     };
     return this.find({
-      where
+      where,
     });
   }
   getCarById(id: string): Promise<CarEntity> {

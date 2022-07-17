@@ -2,7 +2,8 @@ import { Response } from "express";
 import { Get, InternalServerError, JsonController, NotFoundError, Param, QueryParams, Res } from "routing-controllers";
 import { Service } from "typedi";
 import { CarService } from "../../services/car.service";
-import { GetCarsInput } from "./get-cars.dto";
+import { GetCarsInput } from "../../dtos/car/get-cars.dto";
+import { errorResponse, reportError } from "../../../utils/error";
 
 const API_PATH = "/api/v1";
 @JsonController(`${API_PATH}/cars`)
@@ -15,12 +16,8 @@ export class CarController {
     try {
       return await this.carService.getCars(getCarsInput);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        // send the error to a logging service
-      }
-      const internalServerError = new InternalServerError("internal server error");
-      response.status(internalServerError.httpCode);
-      return internalServerError;
+      reportError(error);
+      return errorResponse(response, new InternalServerError("internal server error"));
     }
   }
 
@@ -29,18 +26,12 @@ export class CarController {
     try {
       const car = await this.carService.getCar(id);
       if (!car) {
-        const notFoundError = new NotFoundError(`car not found [id: ${id}]`);
-        response.status(notFoundError.httpCode);
-        return notFoundError;
+        return errorResponse(response, new NotFoundError(`car not found [id: ${id}]`));
       }
       return car;
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        // send the error to a logging service
-      }
-      const internalServerError = new InternalServerError("internal server error");
-      response.status(internalServerError.httpCode);
-      return internalServerError;
+      reportError(error);
+      return errorResponse(response, new InternalServerError("internal server error"));
     }
   }
 }
