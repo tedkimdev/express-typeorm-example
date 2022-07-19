@@ -2,7 +2,7 @@ import { IsNumber, IsOptional, IsString, IsUppercase, Length } from "class-valid
 import { CarEntity } from "../../entities/car.entities";
 import { BaseOutput } from "../common/output.dto";
 
-export class CreateCarsInput {
+export class CreateCarInput {
   @IsString()
   @Length(7, 7)
   plate: string;

@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { InjectRepository } from "typeorm-typedi-extensions";
 import { getError } from "../../utils/error";
-import { CreateCarsInput, GetCarsInput, UpdateCarsInput } from "../dtos/car";
+import { CreateCarInput, GetCarsInput, UpdateCarInput } from "../dtos/car";
 import { CarEntity } from "../entities";
 import { CarRepository } from "../repositories/car.repository";
 
@@ -42,7 +42,7 @@ export class CarService {
     }
   }
 
-  async createCar(createCarInput: CreateCarsInput) {
+  async createCar(createCarInput: CreateCarInput) {
     try {
       const car = new CarEntity();
       car.name = createCarInput.name;
@@ -61,7 +61,7 @@ export class CarService {
     }
   }
 
-  async updateCar(car: CarEntity, updateCarInput: UpdateCarsInput) {
+  async updateCar(car: CarEntity, updateCarInput: UpdateCarInput) {
     try {
       const newCar = car;
       newCar.name = updateCarInput.name? updateCarInput.name : car.name;
