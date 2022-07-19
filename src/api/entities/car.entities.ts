@@ -21,7 +21,7 @@ export class CarEntity extends CommonEntity {
   @Column()
   name: string;
 
-  @Column({ length: 17 })
+  @Column({ length: 17, unique: true })
   vehicleIdentificationNumber: string;
 
   @Column()

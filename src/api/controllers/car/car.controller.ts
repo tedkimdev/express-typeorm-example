@@ -4,13 +4,17 @@ import { Service } from "typedi";
 import { CarService } from "../../services/car.service";
 import { GetCarsInput, DeleteCarOutput, GetCarsOutput, GetCarOutput,CreateCarsInput, CreateCarOutput, UpdateCarsInput, UpdateCarOutput } from "../../dtos/car";
 import { errorResponse, reportError } from "../../../utils/error";
+import { VehicleService } from "../../services/vehicle.service";
 
 const API_PATH = "/api/v1";
 
 @JsonController(`${API_PATH}/cars`)
 @Service()
 export class CarController {
-  constructor(private carService: CarService) {}
+  constructor(
+    private carService: CarService,
+    private vehicleService: VehicleService
+  ) {}
 
   @Get()
   async getCars(@Res() response: Response, @QueryParams() getCarsInput: GetCarsInput): Promise<GetCarsOutput> {
@@ -39,6 +43,10 @@ export class CarController {
   @Post()
   async createCar(@Res() response: Response, @Body() createCarsInput: CreateCarsInput): Promise<CreateCarOutput> {
     try {
+      const isValidVIN = await this.vehicleService.validateVIN(createCarsInput.vehicleIdentificationNumber);
+      if (!isValidVIN) {
+        return errorResponse(response, new BadRequestError("VIN is invalid"));
+      }
       let car = await this.carService.getCarByVIN(createCarsInput.vehicleIdentificationNumber);
       if (car) {
         return errorResponse(response, new BadRequestError("there is a car with that VIN"));
@@ -57,6 +65,12 @@ export class CarController {
       let car = await this.carService.getCar(id);
       if (!car) {
         return errorResponse(response, new NotFoundError(`car not found [id: ${id}]`));
+      }
+      if (updateCarsInput.vehicleIdentificationNumber) {
+        const isValidVIN = await this.vehicleService.validateVIN(updateCarsInput.vehicleIdentificationNumber);
+        if (!isValidVIN) {
+          return errorResponse(response, new BadRequestError("VIN is invalid"));
+        }
       }
       car = await this.carService.updateCar(car, updateCarsInput);
       return { ok: true, data: car };
