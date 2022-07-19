@@ -7,7 +7,7 @@ import { errorResponse, reportError } from "../../../../utils/error";
 type getCarFunc = (response: Response, id: string) => Promise<GetCarOutput>;
 
 export const getCar = (carService: CarService): getCarFunc => {
-  return (async (response: Response, id: string): Promise<GetCarOutput> => {
+  return async (response: Response, id: string): Promise<GetCarOutput> => {
     try {
       const car = await carService.getCar(id);
       if (!car) {
@@ -18,5 +18,5 @@ export const getCar = (carService: CarService): getCarFunc => {
       reportError(error);
       return errorResponse(response, new InternalServerError("failed to get a car"));
     }
-  });
+  };
 };

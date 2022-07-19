@@ -7,7 +7,7 @@ import { errorResponse, reportError } from "../../../../utils/error";
 type deleteCarFunc = (response: Response, id: string) => Promise<DeleteCarOutput>;
 
 export const deleteCar = (carService: CarService): deleteCarFunc => {
-  return (async (response: Response, id: string): Promise<DeleteCarOutput> => {
+  return async (response: Response, id: string): Promise<DeleteCarOutput> => {
     try {
       const car = await carService.getCar(id);
       if (!car) {
@@ -18,7 +18,10 @@ export const deleteCar = (carService: CarService): deleteCarFunc => {
       return { ok: true, data: deleted };
     } catch (error: unknown) {
       reportError(error);
-      return errorResponse(response, new InternalServerError(`Failed to remove the car [id: ${id}]`));
+      return errorResponse(
+        response,
+        new InternalServerError(`Failed to remove the car [id: ${id}]`),
+      );
     }
-  });
+  };
 };

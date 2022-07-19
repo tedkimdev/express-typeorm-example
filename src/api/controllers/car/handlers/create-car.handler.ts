@@ -5,12 +5,20 @@ import { CreateCarOutput, CreateCarInput } from "../../../dtos/car";
 import { errorResponse, reportError } from "../../../../utils/error";
 import { VehicleService } from "../../../services/vehicle.service";
 
-type createCarFunc = (response: Response, createCarInput: CreateCarInput) => Promise<CreateCarOutput>;
+type createCarFunc = (
+  response: Response,
+  createCarInput: CreateCarInput,
+) => Promise<CreateCarOutput>;
 
-export const createCar = (carService: CarService, vehicleService: VehicleService): createCarFunc => {
-  return (async (response: Response, createCarInput: CreateCarInput): Promise<CreateCarOutput> => {
+export const createCar = (
+  carService: CarService,
+  vehicleService: VehicleService,
+): createCarFunc => {
+  return async (response: Response, createCarInput: CreateCarInput): Promise<CreateCarOutput> => {
     try {
-      const isValidVIN = await vehicleService.validateVIN(createCarInput.vehicleIdentificationNumber);
+      const isValidVIN = await vehicleService.validateVIN(
+        createCarInput.vehicleIdentificationNumber,
+      );
       if (!isValidVIN) {
         return errorResponse(response, new BadRequestError("VIN is invalid"));
       }
@@ -24,5 +32,5 @@ export const createCar = (carService: CarService, vehicleService: VehicleService
       reportError(error);
       return errorResponse(response, new InternalServerError("failed to create a car"));
     }
-  });
+  };
 };

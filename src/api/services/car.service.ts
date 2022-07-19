@@ -12,7 +12,7 @@ export class CarService {
   async getCars(getCarsInput: GetCarsInput) {
     try {
       return await this.carRepository.getCars(getCarsInput);
-    } catch(error: unknown) {
+    } catch (error: unknown) {
       throw getError(error);
     }
   }
@@ -20,7 +20,7 @@ export class CarService {
   async getCar(id: string) {
     try {
       return this.carRepository.getCarById(id);
-    } catch(error: unknown) {
+    } catch (error: unknown) {
       throw getError(error);
     }
   }
@@ -29,7 +29,7 @@ export class CarService {
     try {
       const result = await this.carRepository.removeCarById(id);
       return result.affected > 0;
-    } catch(error: unknown) {
+    } catch (error: unknown) {
       throw getError(error);
     }
   }
@@ -37,7 +37,7 @@ export class CarService {
   async getCarByVIN(vin: string) {
     try {
       return await this.carRepository.getCarByVIN(vin);
-    } catch(error: unknown) {
+    } catch (error: unknown) {
       throw getError(error);
     }
   }
@@ -56,7 +56,7 @@ export class CarService {
       car.value = createCarInput.value;
       car.mileage = createCarInput.mileage;
       return await this.carRepository.createCar(car);
-    } catch(error: unknown) {
+    } catch (error: unknown) {
       throw getError(error);
     }
   }
@@ -64,19 +64,27 @@ export class CarService {
   async updateCar(car: CarEntity, updateCarInput: UpdateCarInput) {
     try {
       const newCar = car;
-      newCar.name = updateCarInput.name? updateCarInput.name : car.name;
-      newCar.description = updateCarInput.description ? updateCarInput.description : car.description;
+      newCar.name = updateCarInput.name ? updateCarInput.name : car.name;
+      newCar.description = updateCarInput.description
+        ? updateCarInput.description
+        : car.description;
       newCar.plate = updateCarInput.plate ? updateCarInput.plate : car.plate;
-      newCar.registration = updateCarInput.registration? updateCarInput.registration : car.registration;
+      newCar.registration = updateCarInput.registration
+        ? updateCarInput.registration
+        : car.registration;
       newCar.vehicleIdentificationNumber = car.vehicleIdentificationNumber;
-      newCar.registrationExpirationDate = updateCarInput.registrationExpirationDate ? new Date(updateCarInput.registrationExpirationDate) : car.registrationExpirationDate;
-      newCar.registrationState = updateCarInput.registrationState ? updateCarInput.registrationState : car.registrationState;
+      newCar.registrationExpirationDate = updateCarInput.registrationExpirationDate
+        ? new Date(updateCarInput.registrationExpirationDate)
+        : car.registrationExpirationDate;
+      newCar.registrationState = updateCarInput.registrationState
+        ? updateCarInput.registrationState
+        : car.registrationState;
       newCar.color = updateCarInput.color ? updateCarInput.color : car.color;
       newCar.value = updateCarInput.value ? updateCarInput.value : car.value;
       newCar.mileage = updateCarInput.mileage ? updateCarInput.mileage : car.mileage;
 
       return await this.carRepository.updateCar(newCar);
-    } catch(error: unknown) {
+    } catch (error: unknown) {
       throw getError(error);
     }
   }

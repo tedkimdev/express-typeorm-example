@@ -1,7 +1,5 @@
-import {
-  Column,
-  Entity,
-} from "typeorm";
+/* eslint-disable indent */
+import { Column, Entity } from "typeorm";
 import { CommonEntity } from "./common.entities";
 
 @Entity("Cars")

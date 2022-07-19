@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { IsNumber, IsOptional, IsString, IsUppercase, Length } from "class-validator";
 import { CarEntity } from "../../entities/car.entities";
 import { BaseOutput } from "../common/output.dto";
