@@ -24,10 +24,9 @@ import {
 } from "../../dtos/car";
 import { VehicleService } from "../../services/vehicle.service";
 import * as handler from "./handlers";
+import { constants } from "../../../common/constants";
 
-const API_PATH = "/api/v1";
-
-@JsonController(`${API_PATH}/cars`)
+@JsonController(`${constants.API_PATH}/cars`)
 @Service()
 export class CarController {
   constructor(private carService: CarService, private vehicleService: VehicleService) {}

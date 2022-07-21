@@ -1,2 +1,2 @@
-export * from "./ExpressServerLoader";
-export * from "./DatabaseConnectionLoader";
+export * from "./express-server.loader";
+export * from "./database-connection.loader";
